@@ -1,0 +1,14 @@
+###
+
+@host = 172.16.60.89
+@port = 7480
+@access_key = LFFBEITQZ9KFQY4LF4EU
+@signature = NqY/GcPXqkfhE5zOYNQOpjhxddE=
+@now_date = Fri, 20 Mar 2020 05:53:19 +0000
+
+
+// 获取请求者名下所有的 buckets，无法匿名请求
+GET / HTTP/1.1
+Host: {{host}}:{{port}}
+Date: {{now_date}}
+Authorization: AWS {{access_key}}:{{signature}}

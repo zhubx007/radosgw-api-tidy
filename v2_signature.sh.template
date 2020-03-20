@@ -1,0 +1,29 @@
+#!/bin/bash
+
+s3AccessKey=""
+s3SecretKey=""
+ip=""
+port=""
+
+date=`date +%Y%m%d`
+dateFormatted=`date -u -R`
+
+s3Bucket=""
+method="GET"	# GET, POST, DELETE, PUT
+contentType=""
+contentMD5=""
+
+amzRequests=""
+
+if [ ${s3Bucket} ]
+then
+	relativePath="/${s3Bucket}"
+else
+	relativePath="/"
+fi
+stringToSign="${method}\n${contentMD5}\n${contentType}\n${dateFormatted}\n${amzRequests}${relativePath}"
+signature=`echo -en ${stringToSign} | openssl sha1 -hmac ${s3SecretKey} -binary | base64`
+
+echo -e "Host: "${ip}:${port}
+echo -e "Date: "${dateFormatted}
+echo -e "Authorization: AWS "${s3AccessKey}:${signature}
